@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/pariip/notes-go/internal/app"
 	"github.com/pariip/notes-go/internal/config"
 	"log"
 )
@@ -18,5 +19,7 @@ func init() {
 }
 
 func main() {
-
+	if err := app.Run(cfg); err != nil {
+		log.Fatalln(err)
+	}
 }
