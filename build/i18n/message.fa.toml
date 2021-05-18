@@ -1,0 +1,7 @@
+#general
+DBError = "خطایی وجود دارد"
+
+#user
+UserNotFound = "کاربر مورد نظر یافت نشد"
+InvalidUsernameLength = "طول نام کاربری نامعتبر است"
+InvalidPassword = "طول رمزعبور نامعتبر است"
