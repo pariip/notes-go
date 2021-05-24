@@ -1,4 +1,4 @@
-package cerror
+package cerrors
 
 import (
 	"errors"

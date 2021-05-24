@@ -1,10 +1,19 @@
 package messages
 
 const (
-	DBError      = "DBError"
-	GeneralError = "GeneralError"
+	InvalidWalletStatus   = "InvalidWalletStatus"
+	InvalidUserStatus     = "InvalidUserStatus"
+	InvalidBookStatus     = "InvalidBookStatus"
+	InvalidGender         = "InvalidGender"
+	InvalidRole           = "InvalidRole"
+	InvalidUsernameLength = "InvalidUsernameLength"
+	InvalidPassword       = "InvalidPassword"
 
-	UserNotFound          = "UserNotFound"
-	InvalidUsernameLength = "invalidUsernameLength"
-	InvalidPassword       = "invalidPasswordLength"
+	DBError         = "DBError"
+	GeneralError    = "GeneralError"
+	ParseQueryError = "ParseQueryError"
+
+	UserNotFound                  = "UserNotFound"
+	UsernameIsDuplicate           = "UsernameIsDuplicate"
+	UsernameOrPasswordIsIncorrect = "UsernameOrPasswordIsIncorrect"
 )
