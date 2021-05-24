@@ -1,7 +1,18 @@
-#general
-DBError = "error is exist"
-
-#user
-UserNotFound = "UserNotFound"
+# invalid
+InvalidWalletStatus = "invalid wallet status"
+InvalidUserStatus = "invalid user status"
+InvalidBookStatus = "invalid book status"
+InvalidGender = "invalid gender"
+InvalidRole = "invalid role"
 InvalidUsernameLength = "invalid username length"
 InvalidPassword = "invalid password"
+
+# general
+DBError = "error is exist"
+GeneralError = "error is exist"
+ParseQueryError = "parse query error"
+
+# user
+UserNotFound = "user not found"
+UsernameIsDuplicate = "username is duplicate"
+UsernameOrPasswordIsIncorrect = "username or password is incorrect"
