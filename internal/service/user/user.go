@@ -62,3 +62,19 @@ func (s *service) CreateUser(req *params.CreateUserRequest) (*models.User, error
 	return user, nil
 
 }
+
+func (s *service) GetUserByID(userID uint) (*models.User, error) {
+	user, err := s.userRepo.GetUserByID(userID)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (s *service) GetUserByUsername(username string) (*models.User, error) {
+	user, err := s.userRepo.GetUserByUsername(username)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
