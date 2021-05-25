@@ -98,3 +98,14 @@ func (s *service) UpdateUser(req *params.UpdateUserRequest) (*models.User, error
 	}
 	return user, nil
 }
+
+func (s *service) DeleteUser(userID uint) error {
+	user, err := s.userRepo.GetUserByID(userID)
+	if err != nil {
+		return err
+	}
+	if err := s.userRepo.DeleteUser(user); err != nil {
+		return err
+	}
+	return nil
+}
