@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/pariip/notes-go/internal/config"
 	"github.com/pariip/notes-go/internal/db/postgres"
+	"github.com/pariip/notes-go/internal/service/user"
 	"github.com/pariip/notes-go/pkg/log/logrus"
 	"github.com/pariip/notes-go/pkg/translate/i18n"
 )
@@ -28,6 +29,9 @@ func Run(cfg *config.Config) error {
 
 	mainRepository, err := postgres.New(cfg.Database.Postgres, translatorServ, logger)
 	_ = mainRepository
+
+	userService := user.New(cfg.User, mainRepository, logger, translatorServ)
+	_ = userService
 	return nil
 
 }
