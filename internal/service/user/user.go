@@ -78,3 +78,23 @@ func (s *service) GetUserByUsername(username string) (*models.User, error) {
 	}
 	return user, nil
 }
+
+func (s *service) UpdateUser(req *params.UpdateUserRequest) (*models.User, error) {
+	user, err := s.userRepo.GetUserByID(req.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	user.FirstName = req.FirstName
+	user.LastName = req.LastName
+	user.Email = req.Email
+	user.PhoneNumber = req.PhoneNumber
+	user.Gender = req.Gender
+	user.Avatar = req.Avatar
+
+	user, err = s.userRepo.UpdateUser(user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
