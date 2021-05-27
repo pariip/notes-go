@@ -1,8 +1,12 @@
 package schema
 
-import "github.com/pariip/notes-go/internal/models"
+import (
+	"github.com/pariip/notes-go/internal/models"
+	"gorm.io/gorm"
+)
 
 type Note struct {
+	gorm.Model
 	ID          uint   `json:"id"`
 	UserID      uint   `json:"user_id"`
 	Title       string `json:"title"`
