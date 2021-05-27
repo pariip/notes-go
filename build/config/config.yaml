@@ -15,7 +15,7 @@ i18n:
 
 logger:
   max_age: 720h
-  max_size: 20mb
+  max_size: 20MB
   filename_pattern: "%Y-%m-%dT%H%m"
   rotation_time: "24h"
   internal_path: "./logs/internal/log"
