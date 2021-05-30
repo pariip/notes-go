@@ -1,3 +1,9 @@
+auth:
+  access_expiration_in_minute: 15
+  refresh_expiration_in_minute: 525600
+  jwt_secret: "P43m62MH23"
+
+
 database:
   postgres:
     username: "postgres"
