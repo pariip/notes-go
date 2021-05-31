@@ -4,6 +4,7 @@ import (
 	"github.com/pariip/notes-go/internal/config"
 	"github.com/pariip/notes-go/internal/db/postgres"
 	"github.com/pariip/notes-go/internal/http/server"
+	"github.com/pariip/notes-go/internal/service/auth"
 	"github.com/pariip/notes-go/internal/service/user"
 	"github.com/pariip/notes-go/pkg/log/logrus"
 	"github.com/pariip/notes-go/pkg/translate/i18n"
@@ -21,18 +22,16 @@ func Run(cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
-	_ = logger
+
 	translatorServ, err := i18n.New(cfg.I18n.BundlePath)
 	if err != nil {
 		return err
 	}
-	_ = translatorServ
 
 	mainRepository, err := postgres.New(cfg.Database.Postgres, translatorServ, logger)
-	_ = mainRepository
 
+	authService := auth.New(cfg.Auth, mainRepository, logger, translatorServ)
 	userService := user.New(cfg.User, mainRepository, logger, translatorServ)
-	_ = userService
 
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:         cfg,
