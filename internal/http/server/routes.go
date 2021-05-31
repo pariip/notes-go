@@ -6,4 +6,8 @@ func (s *httpServer) setRoutes() {
 	s.admin.PATCH("/user", s.handler.adminUpdateUser)
 	s.admin.DELETE("/user/:id", s.handler.adminDeleteUser)
 
+	s.user.GET("/token/refresh/:id", s.handler.refreshToken)
+
+	s.public.POST("/login", s.handler.login)
+
 }

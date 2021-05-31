@@ -5,12 +5,15 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/pariip/notes-go/internal/contract"
+	"github.com/pariip/notes-go/internal/models"
+	"github.com/pariip/notes-go/internal/models/types"
 	"net/http"
 )
 
 type (
 	httpServer struct {
 		handler *handler
+		public  *echo.Group
 		admin   *echo.Group
 		user    *echo.Group
 	}
@@ -25,10 +28,27 @@ func NewHttpServer(h *handler) contract.HttpServer {
 	}))
 	e.Use(middleware.Gzip())
 	e.Use(middleware.RequestID())
-	admin := e.Group("/admin")
-	user := e.Group("/user")
+	e.Use(middleware.Recover())
+
+	jwtConfig := middleware.JWTConfig{
+		SigningKey: []byte(h.cfg.Auth.JWTSecret),
+		Claims:     &models.Claims{},
+		ErrorHandler: func(err error) error {
+			fmt.Println(err)
+
+			return &echo.HTTPError{
+				Code:    http.StatusUnauthorized,
+				Message: http.StatusText(http.StatusUnauthorized),
+			}
+		},
+	}
+	public := e.Group("")
+	admin := e.Group("/admin", middleware.JWTWithConfig(jwtConfig), middlewarePermission(h, types.Admin))
+	user := e.Group("/user", middleware.JWTWithConfig(jwtConfig))
+
 	return &httpServer{
 		handler: h,
+		public:  public,
 		admin:   admin,
 		user:    user,
 	}
