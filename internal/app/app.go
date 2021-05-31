@@ -31,7 +31,7 @@ func Run(cfg *config.Config) error {
 	mainRepository, err := postgres.New(cfg.Database.Postgres, translatorServ, logger)
 
 	authService := auth.New(cfg.Auth, mainRepository, logger, translatorServ)
-	userService := user.New(cfg.User, mainRepository, logger, translatorServ)
+	userService := user.New(cfg.User, mainRepository, authService, logger, translatorServ)
 
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:         cfg,

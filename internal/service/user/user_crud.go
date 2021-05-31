@@ -14,13 +14,16 @@ func (s *service) CreateUser(req *params.CreateUserRequest) (*models.User, error
 	if err := s.validateUsername(req.Username); err != nil {
 		return nil, err
 	}
+
 	if err := s.validatePassword(req.Password); err != nil {
 		return nil, err
 	}
+
 	ok, err := s.userRepo.IsUsernameExist(req.Username)
 	if err != nil {
 		return nil, err
 	}
+
 	if ok {
 		s.logger.Error(&log.Field{
 			Section:  "service.user",
@@ -59,6 +62,7 @@ func (s *service) CreateUser(req *params.CreateUserRequest) (*models.User, error
 	if err != nil {
 		return nil, err
 	}
+
 	return user, nil
 
 }
