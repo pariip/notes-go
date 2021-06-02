@@ -45,3 +45,19 @@ func (s service) GetNoteByID(noteId uint) (*models.Note, error) {
 	}
 	return note, nil
 }
+
+func (s service) UpdateNote(req *params.UpdateNoteRequest) (*models.Note, error) {
+	note, err := s.noteRepo.GetNoteByID(req.ID)
+	if err != nil {
+		return nil, err
+	}
+	note.Title = req.Title
+	note.Description = req.Description
+	note.PublicNote = req.PublicNote
+
+	note, err = s.noteRepo.UpdateNote(note)
+	if err != nil {
+		return nil, err
+	}
+	return note, nil
+}

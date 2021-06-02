@@ -9,8 +9,10 @@ type (
 		//Pictures    []Picture
 	}
 	UpdateNoteRequest struct {
+		ID          uint
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		PublicNote  bool   `json:"public_note"`
+		//Pictures    []Picture
 	}
 )
