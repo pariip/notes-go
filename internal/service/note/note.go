@@ -61,3 +61,14 @@ func (s service) UpdateNote(req *params.UpdateNoteRequest) (*models.Note, error)
 	}
 	return note, nil
 }
+
+func (s service) DeleteNote(noteID uint) error {
+	note, err := s.noteRepo.GetNoteByID(noteID)
+	if err != nil {
+		return err
+	}
+	if err := s.noteRepo.DeleteNote(note); err != nil {
+		return err
+	}
+	return nil
+}

@@ -148,3 +148,33 @@ func (h *handler) updateNote(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, note)
 }
+
+func (h *handler) deleteNote(c echo.Context) error {
+	lang := getLanguage(c)
+
+	noteID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		h.logger.Error(&log.Field{
+			Section:  "server.note",
+			Function: "getUserByID",
+			Params:   map[string]interface{}{"id": noteID},
+			Message:  err.Error(),
+		})
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: h.translator.Translate(lang, messages.ParseQueryError),
+		}
+	}
+
+	err = h.noteService.DeleteNote(uint(noteID))
+	if err != nil {
+		message, code := cerrors.HttpError(err)
+
+		return &echo.HTTPError{
+			Code:    code,
+			Message: h.translator.Translate(lang, message),
+		}
+	}
+
+	return c.NoContent(http.StatusOK)
+}

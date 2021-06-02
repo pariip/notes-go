@@ -95,3 +95,28 @@ func (r *repository) UpdateNote(note *models.Note) (*models.Note, error) {
 	}
 	return n.ConvertModel(), nil
 }
+
+func (r *repository) DeleteNote(note *models.Note) error {
+	n := schema.ConvertNote(note)
+
+	res := r.db.Model(&schema.Note{}).Where("id = ?", n.ID).Delete(n)
+	if err := res.Error; err != nil {
+		r.logger.Error(&log.Field{
+			Section:  "repository.note",
+			Function: "DeleteUser",
+			Params:   map[string]interface{}{"note": n},
+			Message:  err.Error(),
+		})
+		return cerrors.New(cerrors.KindUnexpected, messages.DBError)
+	}
+	if res.RowsAffected != 1 {
+		r.logger.Error(&log.Field{
+			Section:  "repository.note",
+			Function: "DeleteUser",
+			Params:   map[string]interface{}{"note": n},
+			Message:  r.translator.TranslateEn(messages.NoteNotFound),
+		})
+		return cerrors.New(cerrors.KindNotFound, messages.NoteNotFound)
+	}
+	return nil
+}
