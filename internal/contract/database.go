@@ -6,6 +6,7 @@ type (
 	MainRepository interface {
 		UserRepository
 		AuthRepository
+		NoteRepository
 	}
 	UserRepository interface {
 		CreateUser(user *models.User) (*models.User, error)
@@ -19,5 +20,11 @@ type (
 	AuthRepository interface {
 		CreateToken(token string, userID uint) error
 		TokenIsExistWithUserID(token string, userID uint) (bool, error)
+	}
+
+	NoteRepository interface {
+		CreateNote(note *models.Note) (*models.Note, error)
+		GetAllNotes(userID uint) ([]*models.Note, error)
+		GetNoteByID(id uint) (*models.Note, error)
 	}
 )
