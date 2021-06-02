@@ -26,5 +26,6 @@ type (
 		CreateNote(note *models.Note) (*models.Note, error)
 		GetAllNotes(userID uint) ([]*models.Note, error)
 		GetNoteByID(id uint) (*models.Note, error)
+		UpdateNote(note *models.Note) (*models.Note, error)
 	}
 )

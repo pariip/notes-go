@@ -120,3 +120,31 @@ func (h *handler) getNoteByID(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, note)
 }
+
+func (h *handler) updateNote(c echo.Context) error {
+	lang := getLanguage(c)
+
+	req := new(params.UpdateNoteRequest)
+	if err := c.Bind(req); err != nil {
+		h.logger.Error(&log.Field{
+			Section:  "server.note",
+			Function: "updateNote",
+			Message:  err.Error(),
+		})
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: h.translator.Translate(lang, messages.ParseQueryError),
+		}
+	}
+
+	note, err := h.noteService.UpdateNote(req)
+	if err != nil {
+		message, code := cerrors.HttpError(err)
+		return &echo.HTTPError{
+			Code:    code,
+			Message: h.translator.Translate(lang, message),
+		}
+	}
+
+	return c.JSON(http.StatusOK, note)
+}

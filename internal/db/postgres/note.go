@@ -65,3 +65,33 @@ func (r *repository) GetNoteByID(noteID uint) (*models.Note, error) {
 
 	return note.ConvertModel(), nil
 }
+
+func (r *repository) UpdateNote(note *models.Note) (*models.Note, error) {
+	n := schema.ConvertNote(note)
+
+	if err := r.db.Model(&schema.Note{}).First(&schema.Note{}, n.ID).Error; err != nil {
+		r.logger.Error(&log.Field{
+			Section:  "repository.note",
+			Function: "UpdateNote",
+			Params:   map[string]interface{}{"note": n},
+			Message:  err.Error(),
+		})
+
+		if isErrorNotFound(err) {
+			return nil, cerrors.New(cerrors.KindNotFound, messages.NoteNotFound)
+		}
+
+		return nil, cerrors.New(cerrors.KindUnexpected, messages.DBError)
+	}
+
+	if err := r.db.Model(&schema.Note{}).Where("id =?", n.ID).Save(n).Error; err != nil {
+		r.logger.Error(&log.Field{
+			Section:  "repository.note",
+			Function: "UpdateUser",
+			Params:   map[string]interface{}{"note": n},
+			Message:  err.Error(),
+		})
+		return nil, cerrors.New(cerrors.KindUnexpected, messages.DBError)
+	}
+	return n.ConvertModel(), nil
+}
