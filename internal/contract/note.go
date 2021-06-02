@@ -10,4 +10,5 @@ type NoteService interface {
 	GetAllNotes(userID uint) ([]*models.Note, error)
 	GetNoteByID(noteID uint) (*models.Note, error)
 	UpdateNote(req *params.UpdateNoteRequest) (*models.Note, error)
+	DeleteNote(noteID uint) error
 }
