@@ -12,12 +12,14 @@ type (
 	handler struct {
 		cfg         *config.Config
 		userService contract.UserService
+		noteService contract.NoteService
 		logger      log.Logger
 		translator  translate.Translator
 	}
 	HandlerFields struct {
 		Cfg         *config.Config
 		UserService contract.UserService
+		NoteService contract.NoteService
 		Logger      log.Logger
 		Translator  translate.Translator
 	}
@@ -39,6 +41,7 @@ func NewHttpHandler(h *HandlerFields) *handler {
 	return &handler{
 		cfg:         h.Cfg,
 		userService: h.UserService,
+		noteService: h.NoteService,
 		logger:      h.Logger,
 		translator:  h.Translator,
 	}

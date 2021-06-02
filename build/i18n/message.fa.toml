@@ -7,6 +7,8 @@ InvalidRole = "نقش نامعتبر است"
 InvalidUsernameLength = "ظول نام کاربری نامعتبر است"
 InvalidPassword = "رمز عبور نامعتبر است"
 InvalidToken = "توکن نامعتبر است"
+InvalidEmptyTitle = "تیتر خالی نامعتبر است "
+InvalidEmptyDescription = " توضیحات خالی نامعتبر است "
 
 # general
 DBError = "خطایی وجود دارد"
@@ -18,3 +20,6 @@ NotPermission = "اجازه دسترسی ندارید"
 UserNotFound = "کاربر مورد نظر یافت نشد"
 UsernameIsDuplicate = "نام کاربری تکراری است"
 UsernameOrPasswordIsIncorrect = "نام کاربری یا کلمه عبور اشتباه است"
+
+#note
+NoteNotFound = "یادداشت مورد نظر یافت نشد"
