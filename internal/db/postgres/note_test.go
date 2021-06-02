@@ -136,3 +136,48 @@ func TestRepository_GetAllNotes(t *testing.T) {
 	}
 
 }
+
+func TestRepository_UpdateNote(t *testing.T) {
+	repo := setupTest(t)
+	user := newUserTest()
+	user1 := newUserTest()
+	var err error
+	t.Run("create new user", func(t *testing.T) {
+		if user, err = repo.CreateUser(user); err != nil {
+			t.Fail()
+		}
+	})
+	note := newNoteTest(user)
+	note1 := newNoteTest(user1)
+	t.Run("create new note", func(t *testing.T) {
+		if note, err = repo.CreateNote(note); err != nil {
+			t.Fail()
+		}
+	})
+	tests := []struct {
+		name string
+		note *models.Note
+		want error
+	}{
+		// TODO: Add test cases.
+		{
+			name: "update note",
+			note: note,
+			want: nil,
+		},
+		{
+			name: "note not found",
+			note: note1,
+			want: cerrors.New(cerrors.KindNotFound, messages.NoteNotFound),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := repo.UpdateNote(tt.note)
+			if !errors.Is(err, tt.want) {
+				t.Error()
+			}
+
+		})
+	}
+}
