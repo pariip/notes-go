@@ -10,4 +10,8 @@ func (s *httpServer) setRoutes() {
 
 	s.public.POST("/login", s.handler.login)
 
+	s.note.POST("", s.handler.createNote)
+	s.note.GET("", s.handler.getAllNotes)
+	s.note.GET("/:id", s.handler.getNoteByID)
+
 }

@@ -38,6 +38,7 @@ func Run(cfg *config.Config) error {
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:         cfg,
 		UserService: userService,
+		NoteService: noteService,
 		Logger:      logger,
 		Translator:  translatorServ,
 	})
