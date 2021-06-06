@@ -7,6 +7,7 @@ import (
 	"github.com/pariip/notes-go/internal/service/auth"
 	"github.com/pariip/notes-go/internal/service/note"
 	"github.com/pariip/notes-go/internal/service/user"
+	"github.com/pariip/notes-go/internal/service/validation"
 	"github.com/pariip/notes-go/pkg/log/logrus"
 	"github.com/pariip/notes-go/pkg/translate/i18n"
 )
@@ -31,14 +32,16 @@ func Run(cfg *config.Config) error {
 
 	mainRepository, err := postgres.New(cfg.Database.Postgres, translatorServ, logger)
 
-	authService := auth.New(cfg.Auth, mainRepository, logger, translatorServ)
-	userService := user.New(cfg.User, mainRepository, authService, logger, translatorServ)
+	validationService := validation.New(&cfg.Validation, logger, translatorServ)
+	authService := auth.New(cfg.Auth, mainRepository, validationService, logger, translatorServ)
+	userService := user.New(cfg.User, mainRepository, validationService, logger, translatorServ)
 	noteService := note.New(cfg, mainRepository, logger, translatorServ)
 
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:         cfg,
 		UserService: userService,
 		NoteService: noteService,
+		AuthService: authService,
 		Logger:      logger,
 		Translator:  translatorServ,
 	})

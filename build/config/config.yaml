@@ -28,6 +28,8 @@ logger:
   request_path: "./logs/request/log"
 
 user:
+
+validation:
   username_min_length: 3
   username_max_length: 50
   password_min_letters: 8

@@ -1,4 +1,4 @@
-package user
+package validation
 
 import (
 	"github.com/pariip/notes-go/pkg/cerrors"
@@ -7,9 +7,8 @@ import (
 	"unicode"
 )
 
-func (s *service) validateUsername(username string) error {
-	if l := len(username); l < s.userCfg.UsernameMinLength || l >= s.userCfg.UsernameMaxLength {
-
+func (s *service) Username(username string) error {
+	if l := len(username); l <= s.cfg.UsernameMinLength || l >= s.cfg.UsernameMaxLength {
 		s.logger.Error(&log.Field{
 			Section:  "user.validation",
 			Function: "validateUsername",
@@ -21,11 +20,10 @@ func (s *service) validateUsername(username string) error {
 	return nil
 }
 
-func (s *service) validatePassword(password string) error {
-	var (
-		number, upper, special bool
-		letters                int
-	)
+func (s *service) Password(password string) error {
+	var number, upper, special bool
+	var letters int
+
 	for _, c := range password {
 		switch {
 		case unicode.IsNumber(c):
@@ -44,10 +42,11 @@ func (s *service) validatePassword(password string) error {
 				Params:   map[string]interface{}{"password": password},
 				Message:  s.translator.TranslateEn(messages.InvalidPassword),
 			})
+
 			return cerrors.New(cerrors.KindInvalid, messages.InvalidPassword)
 		}
 	}
-	if letters >= s.userCfg.PasswordMinLetters && number && upper && special {
+	if letters >= s.cfg.PasswordMinLetters && number && upper && special {
 		return nil
 	}
 	s.logger.Error(&log.Field{
@@ -56,5 +55,6 @@ func (s *service) validatePassword(password string) error {
 		Params:   map[string]interface{}{"password": password},
 		Message:  s.translator.TranslateEn(messages.InvalidPassword),
 	})
+
 	return cerrors.New(cerrors.KindInvalid, messages.InvalidPassword)
 }

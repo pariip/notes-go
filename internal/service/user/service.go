@@ -8,19 +8,19 @@ import (
 )
 
 type service struct {
-	userCfg     *config.User
-	userRepo    contract.UserRepository
-	authService contract.AuthService
-	logger      log.Logger
-	translator  translate.Translator
+	userCfg    *config.User
+	userRepo   contract.UserRepository
+	validate   contract.ValidationService
+	logger     log.Logger
+	translator translate.Translator
 }
 
-func New(cfg config.User, mainRepo contract.MainRepository, authService contract.AuthService, logger log.Logger, translator translate.Translator) contract.UserService {
+func New(cfg config.User, mainRepo contract.MainRepository, validationService contract.ValidationService, logger log.Logger, translator translate.Translator) contract.UserService {
 	return &service{
-		userCfg:     &cfg,
-		userRepo:    mainRepo,
-		authService: authService,
-		logger:      logger,
-		translator:  translator,
+		userCfg:    &cfg,
+		userRepo:   mainRepo,
+		validate:   validationService,
+		logger:     logger,
+		translator: translator,
 	}
 }

@@ -9,15 +9,17 @@ import (
 
 type service struct {
 	cfg        *config.Auth
-	authRepo   contract.AuthRepository
+	userRepo   contract.UserRepository
+	validate   contract.ValidationService
 	logger     log.Logger
 	translator translate.Translator
 }
 
-func New(cfg config.Auth, authRepo contract.AuthRepository, logger log.Logger, translator translate.Translator) contract.AuthService {
+func New(cfg config.Auth, userRepo contract.UserRepository, validationService contract.ValidationService, logger log.Logger, translator translate.Translator) contract.AuthService {
 	return &service{
 		cfg:        &cfg,
-		authRepo:   authRepo,
+		userRepo:   userRepo,
+		validate:   validationService,
 		logger:     logger,
 		translator: translator,
 	}
