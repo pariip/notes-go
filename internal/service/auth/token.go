@@ -3,6 +3,7 @@ package auth
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pariip/notes-go/internal/models"
+	"github.com/pariip/notes-go/internal/params"
 	"github.com/pariip/notes-go/pkg/cerrors"
 	"github.com/pariip/notes-go/pkg/log"
 	"github.com/pariip/notes-go/pkg/translate/messages"
@@ -69,13 +70,24 @@ func (s service) GenerateRefreshToken(user *models.User) (string, error) {
 		})
 		return "", cerrors.New(cerrors.KindUnexpected, messages.GeneralError)
 	}
-	if err := s.authRepo.CreateToken(refreshToken, user.ID); err != nil {
-		return "", err
-	}
 
 	return refreshToken, nil
 }
 
-func (s *service) RefreshTokenIsValid(token string, userID uint) (bool, error) {
-	return s.authRepo.TokenIsExistWithUserID(token, userID)
+func (s *service) RefreshToken(refreshToken string, userID uint) (*params.UserTokens, error) {
+	user, err := s.userRepo.GetUserByID(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	accessToken, err := s.GenerateAccessToken(user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &params.UserTokens{
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}, nil
+
 }
