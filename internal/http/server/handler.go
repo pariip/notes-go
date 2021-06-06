@@ -13,6 +13,7 @@ type (
 		cfg         *config.Config
 		userService contract.UserService
 		noteService contract.NoteService
+		authService contract.AuthService
 		logger      log.Logger
 		translator  translate.Translator
 	}
@@ -20,6 +21,7 @@ type (
 		Cfg         *config.Config
 		UserService contract.UserService
 		NoteService contract.NoteService
+		AuthService contract.AuthService
 		Logger      log.Logger
 		Translator  translate.Translator
 	}
@@ -42,6 +44,7 @@ func NewHttpHandler(h *HandlerFields) *handler {
 		cfg:         h.Cfg,
 		userService: h.UserService,
 		noteService: h.NoteService,
+		authService: h.AuthService,
 		logger:      h.Logger,
 		translator:  h.Translator,
 	}

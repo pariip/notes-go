@@ -28,7 +28,7 @@ func (h *handler) login(c echo.Context) error {
 		}
 	}
 
-	tokens, err := h.userService.Login(req)
+	tokens, err := h.authService.Login(req)
 	if err != nil {
 		message, code := cerrors.HttpError(err)
 		return &echo.HTTPError{
@@ -73,7 +73,7 @@ func (h *handler) refreshToken(c echo.Context) error {
 		}
 	}
 
-	res, err := h.userService.RefreshToken(token.Raw, uint(userID))
+	res, err := h.authService.RefreshToken(token.Raw, uint(userID))
 	if err != nil {
 		message, code := cerrors.HttpError(err)
 
