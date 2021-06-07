@@ -17,7 +17,7 @@ func (h *handler) createNote(c echo.Context) error {
 	if err != nil {
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(messages.ParseQueryError, lang),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -37,7 +37,7 @@ func (h *handler) createNote(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(message, lang),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 	req.UserID = user.ID
@@ -53,7 +53,7 @@ func (h *handler) createNote(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(message, lang),
+			Message: h.translator.Translate(message, lang...),
 		}
 
 	}
@@ -68,7 +68,7 @@ func (h *handler) getAllNotes(c echo.Context) error {
 	if err != nil {
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(messages.ParseQueryError, lang),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -83,7 +83,7 @@ func (h *handler) getAllNotes(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(message, lang),
+			Message: h.translator.Translate(message, lang...),
 		}
 
 	}
@@ -104,7 +104,7 @@ func (h *handler) getNoteByID(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(messages.ParseQueryError, lang),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -113,7 +113,7 @@ func (h *handler) getNoteByID(c echo.Context) error {
 		message, code := cerrors.HttpError(err)
 		return &echo.HTTPError{
 			Code:     code,
-			Message:  h.translator.Translate(message, lang),
+			Message:  h.translator.Translate(message, lang...),
 			Internal: nil,
 		}
 	}
@@ -133,7 +133,7 @@ func (h *handler) updateNote(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(messages.ParseQueryError, lang),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -142,7 +142,7 @@ func (h *handler) updateNote(c echo.Context) error {
 		message, code := cerrors.HttpError(err)
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(message, lang),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 
@@ -162,7 +162,7 @@ func (h *handler) deleteNote(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(messages.ParseQueryError, lang),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -172,7 +172,7 @@ func (h *handler) deleteNote(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(message, lang),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 
