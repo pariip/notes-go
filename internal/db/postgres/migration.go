@@ -8,7 +8,7 @@ import (
 )
 
 func (r *repository) migration() error {
-	err := r.db.AutoMigrate(&schema.User{}, &schema.Note{}, &schema.Picture{}, schema.Token{})
+	err := r.db.AutoMigrate(&schema.User{}, &schema.Note{}, &schema.Picture{})
 	if err != nil {
 		r.logger.Error(&log.Field{
 			Section:  "postgres.migration",
