@@ -110,7 +110,7 @@ func (r *repository) DeleteUser(user *models.User) error {
 			Section:  "repository.user",
 			Function: "DeleteUser",
 			Params:   map[string]interface{}{"user": u},
-			Message:  r.translator.TranslateEn(messages.UserNotFound),
+			Message:  r.translator.Translate(messages.UserNotFound),
 		})
 
 		return cerrors.New(cerrors.KindNotFound, messages.UserNotFound)

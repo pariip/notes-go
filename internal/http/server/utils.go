@@ -29,12 +29,12 @@ func (h *handler) getUserInJwtToken(c echo.Context) (*models.Claims, error) {
 		h.logger.Error(&log.Field{
 			Section:  "server.note",
 			Function: "getUserInJwtToken",
-			Message:  h.translator.TranslateEn(messages.InvalidToken),
+			Message:  h.translator.Translate(messages.InvalidToken),
 		})
 
 		return nil, &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: h.translator.Translate(lang, messages.InvalidToken),
+			Message: h.translator.Translate(messages.InvalidToken, lang),
 		}
 	}
 
@@ -43,12 +43,12 @@ func (h *handler) getUserInJwtToken(c echo.Context) (*models.Claims, error) {
 		h.logger.Error(&log.Field{
 			Section:  "server.note",
 			Function: "getUserInJwtToken",
-			Message:  h.translator.TranslateEn(messages.InvalidToken),
+			Message:  h.translator.Translate(messages.InvalidToken),
 		})
 
 		return nil, &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: h.translator.Translate(lang, messages.InvalidToken),
+			Message: h.translator.Translate(messages.InvalidToken, lang),
 		}
 	}
 	return user, nil

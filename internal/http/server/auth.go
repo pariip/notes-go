@@ -24,7 +24,7 @@ func (h *handler) login(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(lang, messages.ParseQueryError),
+			Message: h.translator.Translate(messages.ParseQueryError, lang),
 		}
 	}
 
@@ -33,7 +33,7 @@ func (h *handler) login(c echo.Context) error {
 		message, code := cerrors.HttpError(err)
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(lang, message),
+			Message: h.translator.Translate(message, lang),
 		}
 	}
 
@@ -48,12 +48,12 @@ func (h *handler) refreshToken(c echo.Context) error {
 		h.logger.Error(&log.Field{
 			Section:  "server.auth",
 			Function: "refreshToken",
-			Message:  h.translator.TranslateEn(messages.InvalidToken),
+			Message:  h.translator.Translate(messages.InvalidToken),
 		})
 
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
-			Message: h.translator.Translate(lang, messages.InvalidToken),
+			Message: h.translator.Translate(messages.InvalidToken, lang),
 		}
 	}
 
@@ -69,7 +69,7 @@ func (h *handler) refreshToken(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(lang, messages.ParseQueryError),
+			Message: h.translator.Translate(messages.ParseQueryError, lang),
 		}
 	}
 

@@ -26,7 +26,7 @@ func (s *service) Login(req *params.LoginRequest) (*params.UserTokens, error) {
 			Section:  "user.user_auth",
 			Function: "Login",
 			Params:   map[string]interface{}{"username": req.Username},
-			Message:  s.translator.TranslateEn(err.Error()),
+			Message:  s.translator.Translate(err.Error()),
 		})
 
 		return nil, err

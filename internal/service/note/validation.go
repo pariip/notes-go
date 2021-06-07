@@ -13,7 +13,7 @@ func (s *service) validation(note *params.CreateNoteRequest) error {
 			Section:  "note.validation",
 			Function: "validation",
 			Params:   map[string]interface{}{"req note": note},
-			Message:  s.translator.TranslateEn(messages.InvalidEmptyTitle),
+			Message:  s.translator.Translate(messages.InvalidEmptyTitle),
 		})
 		return cerrors.New(cerrors.KindInvalid, messages.InvalidEmptyTitle)
 	}
@@ -22,7 +22,7 @@ func (s *service) validation(note *params.CreateNoteRequest) error {
 			Section:  "note.validation",
 			Function: "validation",
 			Params:   map[string]interface{}{"req note": note},
-			Message:  s.translator.TranslateEn(messages.InvalidEmptyDescription),
+			Message:  s.translator.Translate(messages.InvalidEmptyDescription),
 		})
 		return cerrors.New(cerrors.KindInvalid, messages.InvalidEmptyDescription)
 	}
