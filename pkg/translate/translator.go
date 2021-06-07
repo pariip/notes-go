@@ -4,8 +4,7 @@ import "strings"
 
 type (
 	Translator interface {
-		Translate(lang Language, key string) string
-		TranslateEn(key string) string
+		Translate(key string, lang ...Language) string
 	}
 	Language string
 )
