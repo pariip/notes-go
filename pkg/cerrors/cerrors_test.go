@@ -3,6 +3,7 @@ package cerrors
 import (
 	"errors"
 	"fmt"
+	"github.com/pariip/notes-go/pkg/translate/messages"
 	"net/http"
 	"testing"
 )
@@ -37,8 +38,8 @@ func TestHttpError(t *testing.T) {
 			args: args{
 				err: errors.New("something"),
 			},
-			want:  "something",
-			want1: http.StatusBadRequest,
+			want:  messages.GeneralError,
+			want1: http.StatusInternalServerError,
 		},
 	}
 	for _, tt := range tests {
