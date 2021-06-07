@@ -32,7 +32,7 @@ func Test_messageBundle_Translate(t *testing.T) {
 				message:  messages.UserNotFound,
 				language: translate.GetLanguage("en"),
 			},
-			want: "UserNotFound",
+			want: "user not found",
 		},
 		{
 			name: "message key not found",
@@ -49,53 +49,10 @@ func Test_messageBundle_Translate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := translate.Translate(tt.args.language, tt.args.message)
+			got := translate.Translate(tt.args.message, tt.args.language)
 			if got != tt.want {
 				t.Errorf("Translate() got = %v, want %v", got, tt.want)
 			}
-		})
-	}
-}
-
-func TestMessageBundle_TranslateEn(t *testing.T) {
-
-	type args struct {
-		message string
-	}
-
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			name: "translate",
-			args: args{
-				message: messages.UserNotFound,
-			},
-			want: "UserNotFound",
-		},
-		{
-			name: "message key not found",
-			args: args{
-				message: "NoKeyFound",
-			},
-			want: "NoKeyFound",
-		},
-	}
-
-	translate, err := New("../../../build/i18n/")
-	if err != nil {
-		t.Errorf("New() error : %v", err)
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := translate.TranslateEn(tt.args.message)
-			if got != tt.want {
-				t.Errorf("TranslateEn() got = %v, want %v", got, tt.want)
-			}
-
 		})
 	}
 }

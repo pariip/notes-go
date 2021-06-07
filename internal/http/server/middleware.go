@@ -17,7 +17,7 @@ func middlewarePermission(h *handler, roles ...types.Role) echo.MiddlewareFunc {
 			if err != nil {
 				return &echo.HTTPError{
 					Code:    http.StatusBadRequest,
-					Message: h.translator.Translate(lang, messages.ParseQueryError),
+					Message: h.translator.Translate(messages.ParseQueryError, lang...),
 				}
 			}
 
@@ -30,12 +30,12 @@ func middlewarePermission(h *handler, roles ...types.Role) echo.MiddlewareFunc {
 			h.logger.Error(&log.Field{
 				Section:  "server.middleware",
 				Function: "middlewarePermission",
-				Message:  h.translator.TranslateEn(messages.NotPermission),
+				Message:  h.translator.Translate(messages.NotPermission),
 			})
 
 			return &echo.HTTPError{
 				Code:    http.StatusForbidden,
-				Message: h.translator.Translate(lang, messages.NotPermission),
+				Message: h.translator.Translate(messages.NotPermission, lang...),
 			}
 		}
 	}

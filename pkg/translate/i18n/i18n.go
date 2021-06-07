@@ -45,20 +45,21 @@ func (m *messageBundle) getLocalized(lang string) *i18n.Localizer {
 	return i18n.NewLocalizer(m.bundle, lang)
 }
 
-func (m *messageBundle) Translate(lang translate.Language, key string) string {
-	message, err := m.getLocalized(string(lang)).Localize(&i18n.LocalizeConfig{
-		MessageID: key,
-	})
-	if err != nil {
-		return key
-	}
-	return message
-}
+func (m *messageBundle) Translate(key string, languages ...translate.Language) string {
+	lang := translate.EN
 
-func (m *messageBundle) TranslateEn(key string) string {
-	message, err := m.getLocalized("en").Localize(&i18n.LocalizeConfig{
-		MessageID: key,
-	})
+	for _, l := range languages {
+		switch l {
+		case translate.EN:
+			lang = translate.EN
+			break
+		case translate.FA:
+			lang = translate.FA
+			break
+		}
+	}
+
+	message, err := m.getLocalized(lang).Localize(&i18n.LocalizeConfig{MessageID: key})
 	if err != nil {
 		return key
 	}

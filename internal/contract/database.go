@@ -5,7 +5,6 @@ import "github.com/pariip/notes-go/internal/models"
 type (
 	MainRepository interface {
 		UserRepository
-		AuthRepository
 		NoteRepository
 	}
 	UserRepository interface {
@@ -15,11 +14,6 @@ type (
 		UpdateUser(user *models.User) (*models.User, error)
 		DeleteUser(user *models.User) error
 		IsUsernameExist(username string) (bool, error)
-	}
-
-	AuthRepository interface {
-		CreateToken(token string, userID uint) error
-		TokenIsExistWithUserID(token string, userID uint) (bool, error)
 	}
 
 	NoteRepository interface {

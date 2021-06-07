@@ -13,7 +13,7 @@ func (s *service) Username(username string) error {
 			Section:  "user.validation",
 			Function: "validateUsername",
 			Params:   map[string]interface{}{"req username": username},
-			Message:  s.translator.TranslateEn(messages.InvalidUsernameLength),
+			Message:  s.translator.Translate(messages.InvalidUsernameLength),
 		})
 		return cerrors.New(cerrors.KindInvalid, messages.InvalidUsernameLength)
 	}
@@ -40,7 +40,7 @@ func (s *service) Password(password string) error {
 				Section:  "user.validation",
 				Function: "validateCreateUser",
 				Params:   map[string]interface{}{"password": password},
-				Message:  s.translator.TranslateEn(messages.InvalidPassword),
+				Message:  s.translator.Translate(messages.InvalidPassword),
 			})
 
 			return cerrors.New(cerrors.KindInvalid, messages.InvalidPassword)
@@ -53,7 +53,7 @@ func (s *service) Password(password string) error {
 		Section:  "user.validation",
 		Function: "validateCreateUser",
 		Params:   map[string]interface{}{"password": password},
-		Message:  s.translator.TranslateEn(messages.InvalidPassword),
+		Message:  s.translator.Translate(messages.InvalidPassword),
 	})
 
 	return cerrors.New(cerrors.KindInvalid, messages.InvalidPassword)

@@ -29,7 +29,7 @@ func (s *service) CreateUser(req *params.CreateUserRequest) (*models.User, error
 			Section:  "service.user",
 			Function: "CreateUser",
 			Params:   map[string]interface{}{"req": req},
-			Message:  s.translator.TranslateEn(messages.UsernameIsDuplicate),
+			Message:  s.translator.Translate(messages.UsernameIsDuplicate),
 		})
 		return nil, cerrors.New(cerrors.KindInvalid, messages.UsernameIsDuplicate)
 

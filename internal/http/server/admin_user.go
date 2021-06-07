@@ -17,7 +17,7 @@ func (h *handler) adminCreateUser(c echo.Context) error {
 		h.logger.Error(&log.Field{
 			Section:  "server",
 			Function: "createUser",
-			Message:  h.translator.TranslateEn(err.Error()),
+			Message:  h.translator.Translate(err.Error()),
 		})
 		message := messages.ParseQueryError
 		if cerrors.As(err) {
@@ -35,11 +35,11 @@ func (h *handler) adminCreateUser(c echo.Context) error {
 			Section:  "server",
 			Function: "adminCreateUser",
 			Params:   map[string]interface{}{"req": req},
-			Message:  h.translator.TranslateEn(err.Error()),
+			Message:  h.translator.Translate(err.Error()),
 		})
 		return &echo.HTTPError{
 			Code:     code,
-			Message:  h.translator.Translate(lang, message),
+			Message:  h.translator.Translate(message, lang...),
 			Internal: nil,
 		}
 	}
@@ -59,7 +59,7 @@ func (h *handler) adminGetUser(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(lang, messages.ParseQueryError),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 	user, err := h.userService.GetUserByID(uint(id))
@@ -68,7 +68,7 @@ func (h *handler) adminGetUser(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(lang, message),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 	return c.JSON(http.StatusOK, user)
@@ -86,7 +86,7 @@ func (h *handler) adminUpdateUser(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(lang, messages.ParseQueryError),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 	user, err := h.userService.UpdateUser(req)
@@ -94,7 +94,7 @@ func (h *handler) adminUpdateUser(c echo.Context) error {
 		message, code := cerrors.HttpError(err)
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(lang, message),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 	return c.JSON(http.StatusOK, user)
@@ -114,7 +114,7 @@ func (h *handler) adminDeleteUser(c echo.Context) error {
 		})
 		return &echo.HTTPError{
 			Code:    http.StatusBadRequest,
-			Message: h.translator.Translate(lang, messages.ParseQueryError),
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
 		}
 	}
 
@@ -124,7 +124,7 @@ func (h *handler) adminDeleteUser(c echo.Context) error {
 
 		return &echo.HTTPError{
 			Code:    code,
-			Message: h.translator.Translate(lang, message),
+			Message: h.translator.Translate(message, lang...),
 		}
 	}
 	return c.NoContent(http.StatusOK)

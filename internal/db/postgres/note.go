@@ -114,7 +114,7 @@ func (r *repository) DeleteNote(note *models.Note) error {
 			Section:  "repository.note",
 			Function: "DeleteUser",
 			Params:   map[string]interface{}{"note": n},
-			Message:  r.translator.TranslateEn(messages.NoteNotFound),
+			Message:  r.translator.Translate(messages.NoteNotFound),
 		})
 		return cerrors.New(cerrors.KindNotFound, messages.NoteNotFound)
 	}
