@@ -11,7 +11,4 @@ type UserService interface {
 	GetUserByUsername(username string) (*models.User, error)
 	UpdateUser(req *params.UpdateUserRequest) (*models.User, error)
 	DeleteUser(userID uint) error
-
-	Login(req *params.LoginRequest) (*params.UserTokens, error)
-	RefreshToken(refreshToken string, userID uint) (*params.UserTokens, error)
 }

@@ -11,11 +11,11 @@ import (
 
 func (s *service) CreateUser(req *params.CreateUserRequest) (*models.User, error) {
 
-	if err := s.validateUsername(req.Username); err != nil {
+	if err := s.validate.Username(req.Username); err != nil {
 		return nil, err
 	}
 
-	if err := s.validatePassword(req.Password); err != nil {
+	if err := s.validate.Password(req.Password); err != nil {
 		return nil, err
 	}
 

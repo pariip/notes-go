@@ -1,9 +1,14 @@
 package contract
 
-import "github.com/pariip/notes-go/internal/models"
+import (
+	"github.com/pariip/notes-go/internal/models"
+	"github.com/pariip/notes-go/internal/params"
+)
 
 type AuthService interface {
 	GenerateAccessToken(user *models.User) (string, error)
 	GenerateRefreshToken(user *models.User) (string, error)
-	RefreshTokenIsValid(token string, userID uint) (bool, error)
+	RefreshToken(refreshToken string, userID uint) (*params.UserTokens, error)
+
+	Login(req *params.LoginRequest) (*params.UserTokens, error)
 }
