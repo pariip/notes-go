@@ -25,9 +25,4 @@ type (
 		Gender      types.Gender `json:"gender"`
 		Avatar      string       `json:"avatar"`
 	}
-
-	LoginRequest struct {
-		Username string `yaml:"username"`
-		Password string `yaml:"password"`
-	}
 )
