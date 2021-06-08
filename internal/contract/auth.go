@@ -11,4 +11,5 @@ type AuthService interface {
 	RefreshToken(refreshToken string, userID uint) (*params.UserTokens, error)
 
 	Login(req *params.LoginRequest) (*params.UserTokens, error)
+	Signup(req *params.SignupRequest) (*params.UserTokens, error)
 }

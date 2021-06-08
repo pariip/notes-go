@@ -9,7 +9,10 @@ import (
 
 func Password(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes), err
+	if err != nil {
+		return "", cerrors.New(cerrors.KindUnexpected, messages.GeneralError)
+	}
+	return string(bytes), nil
 }
 
 func CheckPassword(password, hashPassword string) error {
