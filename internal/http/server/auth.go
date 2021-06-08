@@ -40,6 +40,36 @@ func (h *handler) login(c echo.Context) error {
 	return c.JSON(http.StatusOK, tokens)
 }
 
+func (h *handler) signup(c echo.Context) error {
+	lang := getLanguage(c)
+
+	req := new(params.SignupRequest)
+	if err := c.Bind(req); err != nil {
+		h.logger.Error(&log.Field{
+			Section:  "http.server",
+			Function: "signup",
+			Params:   map[string]interface{}{"req": req},
+			Message:  err.Error(),
+		})
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
+		}
+	}
+
+	token, err := h.authService.Signup(req)
+	if err != nil {
+		message, code := cerrors.HttpError(err)
+
+		return &echo.HTTPError{
+			Code:    code,
+			Message: h.translator.Translate(message, lang...),
+		}
+
+	}
+	return c.JSON(http.StatusOK, token)
+}
+
 func (h *handler) refreshToken(c echo.Context) error {
 	lang := getLanguage(c)
 
