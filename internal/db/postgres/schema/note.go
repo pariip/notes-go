@@ -7,10 +7,10 @@ import (
 
 type Note struct {
 	gorm.Model
-	UserID      uint   `json:"user_id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	PublicNote  bool   `json:"public_note"`
+	UserID      uint `gorm:"not null"`
+	Title       string
+	Description string
+	PublicNote  bool
 	Pictures    []Picture
 }
 

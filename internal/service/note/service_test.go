@@ -1,31 +1,27 @@
-package postgres
+package note
 
 import (
+	"github.com/golang/mock/gomock"
 	"github.com/pariip/notes-go/internal/config"
-	"github.com/pariip/notes-go/internal/db/postgres/schema"
+	"github.com/pariip/notes-go/internal/mock/repository_mock"
 	"github.com/pariip/notes-go/internal/models"
 	"github.com/pariip/notes-go/internal/models/types"
+	"github.com/pariip/notes-go/internal/params"
 	"github.com/pariip/notes-go/pkg/log/logrus"
 	"github.com/pariip/notes-go/pkg/random"
 	"github.com/pariip/notes-go/pkg/translate/i18n"
-	"log"
+	"math/rand"
 	"testing"
 )
 
-var repositoryTest *repository
+var (
+	mockCtrl     *gomock.Controller
+	mockMainRepo *repository_mock.MockMainRepository
+	serviceTest  *service
+)
 
 func setupTest(t *testing.T) {
-	cfg := &config.Postgres{
-		Username:  "postgres",
-		Password:  "123456",
-		DBName:    "go_notes_test",
-		Host:      "127.0.0.1",
-		Port:      "5432",
-		SSLMode:   "disable",
-		TimeZone:  "Asia/Tehran",
-		Charset:   "utf8mb4",
-		Migration: true,
-	}
+	cfg := config.Config{}
 
 	translator, err := i18n.New("../../../build/i18n/")
 	if err != nil {
@@ -42,46 +38,35 @@ func setupTest(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	repositoryTest = &repository{
-		cfg:        cfg,
-		translator: translator,
+	mockCtrl = gomock.NewController(t)
+	mockMainRepo = repository_mock.NewMockMainRepository(mockCtrl)
+	serviceTest = &service{
+		cfg:        &cfg,
+		noteRepo:   mockMainRepo,
 		logger:     logger,
-	}
-	if err := repositoryTest.connect(); err != nil {
-		t.Fatal(err)
-	}
-	if err := repositoryTest.db.Migrator().DropTable(
-		&schema.User{},
-		&schema.Note{},
-		&schema.Picture{},
-	); err != nil {
-		log.Fatalln(err)
+		translator: translator,
 	}
 
-	if err := repositoryTest.db.Migrator().CreateTable(
-		&schema.User{},
-		&schema.Note{},
-		&schema.Picture{},
-	); err != nil {
-		log.Fatalln(err)
-	}
 }
 
 func teardownTest() {
-	repositoryTest = nil
+	mockCtrl.Finish()
+	mockCtrl = nil
+	mockMainRepo = nil
+	serviceTest = nil
 }
 
 func newUserTest() *models.User {
 	return &models.User{
+		ID:          uint(rand.Uint32()),
 		Username:    random.String(8),
 		Password:    random.String(25),
 		FirstName:   random.String(8),
 		LastName:    random.String(8),
 		Email:       random.String(5) + "@" + random.String(3) + "." + random.String(3),
-		PhoneNumber: "0918" + random.CreateStringWithCharset(7, "0123456789"),
-		Gender:      types.Female,
-		Role:        types.Admin,
+		PhoneNumber: "0912" + random.CreateStringWithCharset(7, "0123456789"),
+		Gender:      types.Male,
+		Role:        types.Basic,
 		Avatar:      "",
 	}
 }
@@ -89,6 +74,7 @@ func newUserTest() *models.User {
 func newNoteTest(user *models.User) *models.Note {
 
 	return &models.Note{
+		ID:          uint(rand.Uint32()),
 		UserID:      user.ID,
 		Title:       random.String(8),
 		Description: random.String(45),
@@ -96,4 +82,21 @@ func newNoteTest(user *models.User) *models.Note {
 		Pictures:    nil,
 	}
 
+}
+
+func newCreateNoteRequestTest(user *models.User) *params.CreateNoteRequest {
+	return &params.CreateNoteRequest{
+		UserID:      user.ID,
+		Title:       random.String(5),
+		Description: random.String(10),
+		PublicNote:  false,
+	}
+}
+
+func newUpdateNoteRequestTest() *params.UpdateNoteRequest {
+	return &params.UpdateNoteRequest{
+		Title:       random.String(5),
+		Description: random.String(10),
+		PublicNote:  false,
+	}
 }

@@ -10,8 +10,10 @@ import (
 	"testing"
 )
 
-func TestRepository_CreateUser(t *testing.T) {
-	repo := setupTest(t)
+func TestCreateUser(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 
 	tests := []struct {
@@ -32,7 +34,7 @@ func TestRepository_CreateUser(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := repo.CreateUser(tt.user)
+			_, err := repositoryTest.CreateUser(tt.user)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -40,15 +42,19 @@ func TestRepository_CreateUser(t *testing.T) {
 	}
 }
 
-func TestRepository_GetUserByID(t *testing.T) {
-	repo := setupTest(t)
+func TestGetUserByID(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	var err error
+
 	t.Run("create new test user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
+
 	tests := []struct {
 		name   string
 		userID uint
@@ -67,7 +73,7 @@ func TestRepository_GetUserByID(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := repo.GetUserByID(tt.userID)
+			_, err := repositoryTest.GetUserByID(tt.userID)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -75,15 +81,19 @@ func TestRepository_GetUserByID(t *testing.T) {
 	}
 }
 
-func TestRepository_GetUserByUsername(t *testing.T) {
-	repo := setupTest(t)
+func TestGetUserByUsername(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	var err error
+
 	t.Run("create new test user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
+
 	tests := []struct {
 		name     string
 		username string
@@ -102,7 +112,7 @@ func TestRepository_GetUserByUsername(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := repo.GetUserByUsername(tt.username)
+			_, err := repositoryTest.GetUserByUsername(tt.username)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -110,13 +120,16 @@ func TestRepository_GetUserByUsername(t *testing.T) {
 	}
 }
 
-func TestRepository_UpdateUser(t *testing.T) {
-	repo := setupTest(t)
+func TestUpdateUser(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	user1 := newUserTest()
 	var err error
+
 	t.Run("create new test user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
@@ -138,7 +151,7 @@ func TestRepository_UpdateUser(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := repo.UpdateUser(tt.user)
+			_, err := repositoryTest.UpdateUser(tt.user)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -147,17 +160,21 @@ func TestRepository_UpdateUser(t *testing.T) {
 	}
 }
 
-func TestRepository_DeleteUser(t *testing.T) {
-	repo := setupTest(t)
+func TestDeleteUser(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	user1 := newUserTest()
 	var err error
+
 	t.Run("create new record", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
 	user1.ID = uint(rand.Uint32())
+
 	tests := []struct {
 		name string
 		user *models.User
@@ -177,7 +194,7 @@ func TestRepository_DeleteUser(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := repo.DeleteUser(tt.user)
+			err := repositoryTest.DeleteUser(tt.user)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}

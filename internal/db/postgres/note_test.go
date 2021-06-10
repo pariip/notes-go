@@ -5,30 +5,19 @@ import (
 	"fmt"
 	"github.com/pariip/notes-go/internal/models"
 	"github.com/pariip/notes-go/pkg/cerrors"
-	"github.com/pariip/notes-go/pkg/random"
 	"github.com/pariip/notes-go/pkg/translate/messages"
 	"math/rand"
 	"testing"
 )
 
-func newNoteTest(user *models.User) *models.Note {
+func TestCreateNote(t *testing.T) {
+	setupTest(t)
+	defer teardownTest()
 
-	return &models.Note{
-		UserID:      user.ID,
-		Title:       random.String(8),
-		Description: random.String(45),
-		PublicNote:  false,
-		Pictures:    nil,
-	}
-
-}
-
-func Test_repository_CreateNote(t *testing.T) {
-	repo := setupTest(t)
 	user := newUserTest()
 	var err error
 	t.Run("create new user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
@@ -47,7 +36,7 @@ func Test_repository_CreateNote(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err = repo.CreateNote(tt.note)
+			_, err = repositoryTest.CreateNote(tt.note)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -56,17 +45,18 @@ func Test_repository_CreateNote(t *testing.T) {
 }
 
 func TestRepository_GetNoteByID(t *testing.T) {
-	repo := setupTest(t)
+	setupTest(t)
+	defer teardownTest()
 	user := newUserTest()
 	var err error
 	t.Run("create new user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
 	note := newNoteTest(user)
 	t.Run("create new note", func(t *testing.T) {
-		if note, err = repo.CreateNote(note); err != nil {
+		if note, err = repositoryTest.CreateNote(note); err != nil {
 			t.Fail()
 		}
 	})
@@ -90,7 +80,7 @@ func TestRepository_GetNoteByID(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err = repo.GetNoteByID(tt.id)
+			_, err = repositoryTest.GetNoteByID(tt.id)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -100,17 +90,19 @@ func TestRepository_GetNoteByID(t *testing.T) {
 }
 
 func TestRepository_GetAllNotes(t *testing.T) {
-	repo := setupTest(t)
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	var err error
 	t.Run("create new user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
 	note := newNoteTest(user)
 	t.Run("create new note", func(t *testing.T) {
-		if note, err = repo.CreateNote(note); err != nil {
+		if note, err = repositoryTest.CreateNote(note); err != nil {
 			t.Fail()
 		}
 	})
@@ -128,7 +120,7 @@ func TestRepository_GetAllNotes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err = repo.GetAllNotes(tt.userID)
+			_, err = repositoryTest.GetAllNotes(tt.userID)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -138,12 +130,14 @@ func TestRepository_GetAllNotes(t *testing.T) {
 }
 
 func TestRepository_UpdateNote(t *testing.T) {
-	repo := setupTest(t)
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	var err error
 
 	t.Run("create new user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
@@ -151,7 +145,7 @@ func TestRepository_UpdateNote(t *testing.T) {
 	note := newNoteTest(user)
 	note1 := newNoteTest(user)
 	t.Run("create new note", func(t *testing.T) {
-		if note, err = repo.CreateNote(note); err != nil {
+		if note, err = repositoryTest.CreateNote(note); err != nil {
 			t.Fail()
 		}
 	})
@@ -176,7 +170,7 @@ func TestRepository_UpdateNote(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := repo.UpdateNote(tt.note)
+			_, err := repositoryTest.UpdateNote(tt.note)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
@@ -186,12 +180,14 @@ func TestRepository_UpdateNote(t *testing.T) {
 }
 
 func TestRepository_DeleteNote(t *testing.T) {
-	repo := setupTest(t)
+	setupTest(t)
+	defer teardownTest()
+
 	user := newUserTest()
 	var err error
 
 	t.Run("create new user", func(t *testing.T) {
-		if user, err = repo.CreateUser(user); err != nil {
+		if user, err = repositoryTest.CreateUser(user); err != nil {
 			t.Fail()
 		}
 	})
@@ -199,7 +195,7 @@ func TestRepository_DeleteNote(t *testing.T) {
 	note := newNoteTest(user)
 	note1 := newNoteTest(user)
 	t.Run("create new note", func(t *testing.T) {
-		if note, err = repo.CreateNote(note); err != nil {
+		if note, err = repositoryTest.CreateNote(note); err != nil {
 			t.Fail()
 		}
 	})
@@ -224,7 +220,7 @@ func TestRepository_DeleteNote(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := repo.DeleteNote(tt.note)
+			err := repositoryTest.DeleteNote(tt.note)
 			if !errors.Is(err, tt.want) {
 				t.Error()
 			}
