@@ -2,6 +2,8 @@ package contract
 
 import "github.com/pariip/notes-go/internal/models"
 
+//go:generate mockgen -source ./repository.go -package repository_mock -destination ../mock/repository_mock/mock.go
+
 type (
 	MainRepository interface {
 		UserRepository

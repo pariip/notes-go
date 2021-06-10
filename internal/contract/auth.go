@@ -5,6 +5,8 @@ import (
 	"github.com/pariip/notes-go/internal/params"
 )
 
+//go:generate mockgen -source ./auth.go  -package auth_mock  -destination ../mock/auth_mock/mock.go
+
 type AuthService interface {
 	GenerateAccessToken(user *models.User) (string, error)
 	GenerateRefreshToken(user *models.User) (string, error)

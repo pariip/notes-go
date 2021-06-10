@@ -5,6 +5,8 @@ import (
 	"github.com/pariip/notes-go/internal/params"
 )
 
+//go:generate mockgen -source ./user.go -package user_mock -destination ../mock/user_mock/mock.go
+
 type UserService interface {
 	CreateUser(req *params.CreateUserRequest) (*models.User, error)
 	GetUserByID(userID uint) (*models.User, error)
