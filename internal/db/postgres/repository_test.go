@@ -12,7 +12,9 @@ import (
 	"testing"
 )
 
-func setupTest(t *testing.T) *repository {
+var repositoryTest *repository
+
+func setupTest(t *testing.T) {
 	cfg := &config.Postgres{
 		Username:  "postgres",
 		Password:  "123456",
@@ -24,10 +26,12 @@ func setupTest(t *testing.T) *repository {
 		Charset:   "utf8mb4",
 		Migration: true,
 	}
+
 	translator, err := i18n.New("../../../build/i18n/")
 	if err != nil {
 		t.Fatal(err)
 	}
+
 	logger, err := logrus.New(&logrus.Option{
 		Path:         "../../../logs/test",
 		Pattern:      "%Y-%m-%dT%H:%M",
@@ -38,15 +42,16 @@ func setupTest(t *testing.T) *repository {
 	if err != nil {
 		t.Fatal(err)
 	}
-	repo := &repository{
+
+	repositoryTest = &repository{
 		cfg:        cfg,
 		translator: translator,
 		logger:     logger,
 	}
-	if err := repo.connect(); err != nil {
+	if err := repositoryTest.connect(); err != nil {
 		t.Fatal(err)
 	}
-	if err := repo.db.Migrator().DropTable(
+	if err := repositoryTest.db.Migrator().DropTable(
 		&schema.User{},
 		&schema.Note{},
 		&schema.Picture{},
@@ -54,15 +59,17 @@ func setupTest(t *testing.T) *repository {
 		log.Fatalln(err)
 	}
 
-	if err := repo.db.Migrator().CreateTable(
+	if err := repositoryTest.db.Migrator().CreateTable(
 		&schema.User{},
 		&schema.Note{},
 		&schema.Picture{},
 	); err != nil {
 		log.Fatalln(err)
 	}
-	return repo
+}
 
+func teardownTest() {
+	repositoryTest = nil
 }
 
 func newUserTest() *models.User {
@@ -77,4 +84,16 @@ func newUserTest() *models.User {
 		Role:        types.Admin,
 		Avatar:      "",
 	}
+}
+
+func newNoteTest(user *models.User) *models.Note {
+
+	return &models.Note{
+		UserID:      user.ID,
+		Title:       random.String(8),
+		Description: random.String(45),
+		PublicNote:  false,
+		Pictures:    nil,
+	}
+
 }
