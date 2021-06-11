@@ -23,7 +23,8 @@ func (s *httpServer) setRoutes() {
 	//note routes
 	{
 		s.note.POST("", s.handler.createNote)
-		s.note.GET("", s.handler.getAllNotes)
+		s.note.GET("/all", s.handler.getAllNotes)
+		s.note.GET("", s.handler.getAllMyNotes)
 		s.note.GET("/:id", s.handler.getNoteByID)
 		s.note.PATCH("", s.handler.updateNote)
 		s.note.DELETE("/:id", s.handler.deleteNote)
