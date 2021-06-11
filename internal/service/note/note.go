@@ -37,6 +37,17 @@ func (s service) GetAllNotes(userID uint) ([]*models.Note, error) {
 	return notes, nil
 }
 
+func (s service) GetAllMyNotes(userID uint) ([]*models.Note, error) {
+	var notes []*models.Note
+
+	notes, err := s.noteRepo.GetAllMyNotes(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return notes, nil
+}
+
 func (s service) GetNoteByID(noteId uint) (*models.Note, error) {
 	note, err := s.noteRepo.GetNoteByID(noteId)
 

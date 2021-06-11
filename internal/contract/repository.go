@@ -21,6 +21,7 @@ type (
 	NoteRepository interface {
 		CreateNote(note *models.Note) (*models.Note, error)
 		GetAllNotes(userID uint) ([]*models.Note, error)
+		GetAllMyNotes(userID uint) ([]*models.Note, error)
 		GetNoteByID(id uint) (*models.Note, error)
 		UpdateNote(note *models.Note) (*models.Note, error)
 		DeleteNote(note *models.Note) error

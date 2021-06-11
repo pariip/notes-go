@@ -91,6 +91,36 @@ func (h *handler) getAllNotes(c echo.Context) error {
 	return c.JSON(http.StatusOK, notes)
 }
 
+func (h *handler) getAllMyNotes(c echo.Context) error {
+	lang := getLanguage(c)
+
+	user, err := h.getUserInJwtToken(c)
+	if err != nil {
+		return &echo.HTTPError{
+			Code:    http.StatusBadRequest,
+			Message: h.translator.Translate(messages.ParseQueryError, lang...),
+		}
+	}
+
+	notes, err := h.noteService.GetAllMyNotes(user.ID)
+	if err != nil {
+		message, code := cerrors.HttpError(err)
+		h.logger.Error(&log.Field{
+			Section:  "server.note",
+			Function: "getAllNotes",
+			Params:   map[string]interface{}{"user_id": user.ID},
+			Message:  h.translator.Translate(err.Error()),
+		})
+		return &echo.HTTPError{
+			Code:    code,
+			Message: h.translator.Translate(message, lang...),
+		}
+
+	}
+
+	return c.JSON(http.StatusOK, notes)
+}
+
 func (h *handler) getNoteByID(c echo.Context) error {
 	lang := getLanguage(c)
 
