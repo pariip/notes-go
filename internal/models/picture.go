@@ -5,6 +5,6 @@ type (
 		ID     uint
 		Name   string
 		Alt    string
-		NoteID uint
+		NoteID *uint
 	}
 )

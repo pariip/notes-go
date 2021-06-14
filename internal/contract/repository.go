@@ -8,6 +8,7 @@ type (
 	MainRepository interface {
 		UserRepository
 		NoteRepository
+		ImageRepository
 	}
 	UserRepository interface {
 		CreateUser(user *models.User) (*models.User, error)
@@ -25,5 +26,9 @@ type (
 		GetNoteByID(id uint) (*models.Note, error)
 		UpdateNote(note *models.Note) (*models.Note, error)
 		DeleteNote(note *models.Note) error
+	}
+
+	ImageRepository interface {
+		UploadImage(pic *models.Picture) (*models.Picture, error)
 	}
 )
