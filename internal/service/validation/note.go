@@ -1,4 +1,4 @@
-package note
+package validation
 
 import (
 	"github.com/pariip/notes-go/internal/params"
@@ -7,7 +7,7 @@ import (
 	"github.com/pariip/notes-go/pkg/translate/messages"
 )
 
-func (s *service) validation(note *params.CreateNoteRequest) error {
+func (s *service) Note(note *params.CreateNoteRequest) error {
 	if note.Title == "" {
 		s.logger.Error(&log.Field{
 			Section:  "note.validation",

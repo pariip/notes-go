@@ -10,14 +10,16 @@ import (
 type service struct {
 	cfg        *config.Config
 	noteRepo   contract.MainRepository
+	validate   contract.NoteValidation
 	logger     log.Logger
 	translator translate.Translator
 }
 
-func New(cfg *config.Config, noteRepo contract.MainRepository, logger log.Logger, translator translate.Translator) contract.NoteService {
+func New(cfg *config.Config, noteRepo contract.MainRepository, validate contract.NoteValidation, logger log.Logger, translator translate.Translator) contract.NoteService {
 	return &service{
 		cfg:        cfg,
 		noteRepo:   noteRepo,
+		validate:   validate,
 		logger:     logger,
 		translator: translator,
 	}

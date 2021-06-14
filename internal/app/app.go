@@ -36,7 +36,7 @@ func Run(cfg *config.Config) error {
 	validationService := validation.New(&cfg.Validation, logger, translatorServ)
 	authService := auth.New(cfg.Auth, mainRepository, validationService, logger, translatorServ)
 	userService := user.New(cfg.User, mainRepository, validationService, logger, translatorServ)
-	noteService := note.New(cfg, mainRepository, logger, translatorServ)
+	noteService := note.New(cfg, mainRepository, validationService, logger, translatorServ)
 	imageService := picture.New(cfg.Path, mainRepository, logger, translatorServ)
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:          cfg,
