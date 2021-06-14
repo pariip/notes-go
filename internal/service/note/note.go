@@ -3,10 +3,12 @@ package note
 import (
 	"github.com/pariip/notes-go/internal/models"
 	"github.com/pariip/notes-go/internal/params"
+	"github.com/pariip/notes-go/pkg/log"
+	"github.com/pariip/notes-go/pkg/translate/messages"
 )
 
 func (s service) CreateNote(req *params.CreateNoteRequest) (*models.Note, error) {
-	if err := s.validation(req); err != nil {
+	if err := s.validate.Note(req); err != nil {
 		return nil, err
 	}
 
@@ -15,9 +17,28 @@ func (s service) CreateNote(req *params.CreateNoteRequest) (*models.Note, error)
 		Title:       req.Title,
 		Description: req.Description,
 		PublicNote:  req.PublicNote,
-		Pictures:    nil,
 	}
-
+	if req.Pictures != nil {
+		var pic []models.Picture
+		for _, picture := range req.Pictures {
+			photo, err := s.noteRepo.IsImageExist(picture.Alt)
+			if err != nil {
+				return nil, err
+			}
+			if _, err = imageIsDuplicate(photo, picture.ID); err != nil {
+				s.logger.Error(&log.Field{
+					Section:  "service.note",
+					Function: "CreateNote",
+					Params:   map[string]interface{}{"pictureName": photo.Name},
+					Message:  s.translator.Translate(messages.PictureDuplicate),
+				})
+				return nil, err
+			}
+			picture = *photo
+			pic = append(pic, picture)
+		}
+		note.Pictures = pic
+	}
 	note, err := s.noteRepo.CreateNote(note)
 	if err != nil {
 		return nil, err

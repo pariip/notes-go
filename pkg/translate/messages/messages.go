@@ -22,4 +22,6 @@ const (
 	UsernameOrPasswordIsIncorrect = "UsernameOrPasswordIsIncorrect"
 
 	NoteNotFound = "NoteNotFound"
+
+	PictureDuplicate = "PictureDuplicate"
 )

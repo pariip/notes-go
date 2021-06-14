@@ -30,5 +30,6 @@ type (
 
 	ImageRepository interface {
 		UploadImage(pic *models.Picture) (*models.Picture, error)
+		IsImageExist(picAlt string) (*models.Picture, error)
 	}
 )

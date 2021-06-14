@@ -23,3 +23,6 @@ UsernameOrPasswordIsIncorrect = "username or password is incorrect"
 
 # note
 NoteNotFound = "note not found"
+
+#picture
+PictureDuplicate = " image is duplicate"

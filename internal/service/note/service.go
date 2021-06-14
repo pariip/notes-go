@@ -9,7 +9,7 @@ import (
 
 type service struct {
 	cfg        *config.Config
-	noteRepo   contract.NoteRepository
+	noteRepo   contract.MainRepository
 	logger     log.Logger
 	translator translate.Translator
 }

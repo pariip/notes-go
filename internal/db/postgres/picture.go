@@ -23,3 +23,18 @@ func (r *repository) UploadImage(pic *models.Picture) (*models.Picture, error) {
 	}
 	return p.ConvertModel(), nil
 }
+
+//IsImageExist check image is exist
+func (r *repository) IsImageExist(picAlt string) (*models.Picture, error) {
+	picture := &schema.Picture{}
+	if err := r.db.Model(&schema.Picture{}).Where("alt = ?", picAlt).First(picture).Error; err != nil {
+		r.logger.Error(&log.Field{
+			Section:  "repository.user",
+			Function: "IsImageExist",
+			Params:   map[string]interface{}{"picture": picture.Name},
+			Message:  err.Error(),
+		})
+		return nil, cerrors.New(cerrors.KindUnexpected, messages.DBError)
+	}
+	return picture.ConvertModel(), nil
+}
