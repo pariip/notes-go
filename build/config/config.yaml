@@ -33,3 +33,7 @@ validation:
   username_min_length: 3
   username_max_length: 50
   password_min_letters: 8
+
+path:
+  image_path: "internal/image/note_image/"
+  link_path: "http://127.0.0.1/"

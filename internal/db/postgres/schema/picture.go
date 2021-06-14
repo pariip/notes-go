@@ -10,7 +10,7 @@ type (
 		gorm.Model
 		Name   string
 		Alt    string
-		NoteID uint
+		NoteID *uint
 	}
 )
 

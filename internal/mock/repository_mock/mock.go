@@ -92,6 +92,21 @@ func (mr *MockMainRepositoryMockRecorder) DeleteUser(user interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUser", reflect.TypeOf((*MockMainRepository)(nil).DeleteUser), user)
 }
 
+// GetAllMyNotes mocks base method.
+func (m *MockMainRepository) GetAllMyNotes(userID uint) ([]*models.Note, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllMyNotes", userID)
+	ret0, _ := ret[0].([]*models.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllMyNotes indicates an expected call of GetAllMyNotes.
+func (mr *MockMainRepositoryMockRecorder) GetAllMyNotes(userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllMyNotes", reflect.TypeOf((*MockMainRepository)(nil).GetAllMyNotes), userID)
+}
+
 // GetAllNotes mocks base method.
 func (m *MockMainRepository) GetAllNotes(userID uint) ([]*models.Note, error) {
 	m.ctrl.T.Helper()
@@ -152,6 +167,21 @@ func (mr *MockMainRepositoryMockRecorder) GetUserByUsername(username interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByUsername", reflect.TypeOf((*MockMainRepository)(nil).GetUserByUsername), username)
 }
 
+// IsImageExist mocks base method.
+func (m *MockMainRepository) IsImageExist(picAlt string) (*models.Picture, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsImageExist", picAlt)
+	ret0, _ := ret[0].(*models.Picture)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IsImageExist indicates an expected call of IsImageExist.
+func (mr *MockMainRepositoryMockRecorder) IsImageExist(picAlt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsImageExist", reflect.TypeOf((*MockMainRepository)(nil).IsImageExist), picAlt)
+}
+
 // IsUsernameExist mocks base method.
 func (m *MockMainRepository) IsUsernameExist(username string) (bool, error) {
 	m.ctrl.T.Helper()
@@ -195,6 +225,21 @@ func (m *MockMainRepository) UpdateUser(user *models.User) (*models.User, error)
 func (mr *MockMainRepositoryMockRecorder) UpdateUser(user interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUser", reflect.TypeOf((*MockMainRepository)(nil).UpdateUser), user)
+}
+
+// UploadImage mocks base method.
+func (m *MockMainRepository) UploadImage(pic *models.Picture) (*models.Picture, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UploadImage", pic)
+	ret0, _ := ret[0].(*models.Picture)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadImage indicates an expected call of UploadImage.
+func (mr *MockMainRepositoryMockRecorder) UploadImage(pic interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadImage", reflect.TypeOf((*MockMainRepository)(nil).UploadImage), pic)
 }
 
 // MockUserRepository is a mock of UserRepository interface.
@@ -361,6 +406,21 @@ func (mr *MockNoteRepositoryMockRecorder) DeleteNote(note interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteNote", reflect.TypeOf((*MockNoteRepository)(nil).DeleteNote), note)
 }
 
+// GetAllMyNotes mocks base method.
+func (m *MockNoteRepository) GetAllMyNotes(userID uint) ([]*models.Note, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllMyNotes", userID)
+	ret0, _ := ret[0].([]*models.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllMyNotes indicates an expected call of GetAllMyNotes.
+func (mr *MockNoteRepositoryMockRecorder) GetAllMyNotes(userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllMyNotes", reflect.TypeOf((*MockNoteRepository)(nil).GetAllMyNotes), userID)
+}
+
 // GetAllNotes mocks base method.
 func (m *MockNoteRepository) GetAllNotes(userID uint) ([]*models.Note, error) {
 	m.ctrl.T.Helper()
@@ -404,4 +464,57 @@ func (m *MockNoteRepository) UpdateNote(note *models.Note) (*models.Note, error)
 func (mr *MockNoteRepositoryMockRecorder) UpdateNote(note interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateNote", reflect.TypeOf((*MockNoteRepository)(nil).UpdateNote), note)
+}
+
+// MockImageRepository is a mock of ImageRepository interface.
+type MockImageRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockImageRepositoryMockRecorder
+}
+
+// MockImageRepositoryMockRecorder is the mock recorder for MockImageRepository.
+type MockImageRepositoryMockRecorder struct {
+	mock *MockImageRepository
+}
+
+// NewMockImageRepository creates a new mock instance.
+func NewMockImageRepository(ctrl *gomock.Controller) *MockImageRepository {
+	mock := &MockImageRepository{ctrl: ctrl}
+	mock.recorder = &MockImageRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockImageRepository) EXPECT() *MockImageRepositoryMockRecorder {
+	return m.recorder
+}
+
+// IsImageExist mocks base method.
+func (m *MockImageRepository) IsImageExist(picAlt string) (*models.Picture, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsImageExist", picAlt)
+	ret0, _ := ret[0].(*models.Picture)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IsImageExist indicates an expected call of IsImageExist.
+func (mr *MockImageRepositoryMockRecorder) IsImageExist(picAlt interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsImageExist", reflect.TypeOf((*MockImageRepository)(nil).IsImageExist), picAlt)
+}
+
+// UploadImage mocks base method.
+func (m *MockImageRepository) UploadImage(pic *models.Picture) (*models.Picture, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UploadImage", pic)
+	ret0, _ := ret[0].(*models.Picture)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadImage indicates an expected call of UploadImage.
+func (mr *MockImageRepositoryMockRecorder) UploadImage(pic interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadImage", reflect.TypeOf((*MockImageRepository)(nil).UploadImage), pic)
 }

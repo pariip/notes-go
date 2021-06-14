@@ -64,6 +64,21 @@ func (mr *MockNoteServiceMockRecorder) DeleteNote(noteID interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteNote", reflect.TypeOf((*MockNoteService)(nil).DeleteNote), noteID)
 }
 
+// GetAllMyNotes mocks base method.
+func (m *MockNoteService) GetAllMyNotes(userID uint) ([]*models.Note, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllMyNotes", userID)
+	ret0, _ := ret[0].([]*models.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllMyNotes indicates an expected call of GetAllMyNotes.
+func (mr *MockNoteServiceMockRecorder) GetAllMyNotes(userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllMyNotes", reflect.TypeOf((*MockNoteService)(nil).GetAllMyNotes), userID)
+}
+
 // GetAllNotes mocks base method.
 func (m *MockNoteService) GetAllNotes(userID uint) ([]*models.Note, error) {
 	m.ctrl.T.Helper()

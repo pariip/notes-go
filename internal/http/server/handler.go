@@ -10,20 +10,22 @@ import (
 
 type (
 	handler struct {
-		cfg         *config.Config
-		userService contract.UserService
-		noteService contract.NoteService
-		authService contract.AuthService
-		logger      log.Logger
-		translator  translate.Translator
+		cfg          *config.Config
+		userService  contract.UserService
+		noteService  contract.NoteService
+		authService  contract.AuthService
+		imageService contract.ImageService
+		logger       log.Logger
+		translator   translate.Translator
 	}
 	HandlerFields struct {
-		Cfg         *config.Config
-		UserService contract.UserService
-		NoteService contract.NoteService
-		AuthService contract.AuthService
-		Logger      log.Logger
-		Translator  translate.Translator
+		Cfg          *config.Config
+		UserService  contract.UserService
+		NoteService  contract.NoteService
+		AuthService  contract.AuthService
+		ImageService contract.ImageService
+		Logger       log.Logger
+		Translator   translate.Translator
 	}
 )
 
@@ -41,11 +43,12 @@ func NewHttpHandler(h *HandlerFields) *handler {
 		golang.Fatal("handler translator is nil")
 	}
 	return &handler{
-		cfg:         h.Cfg,
-		userService: h.UserService,
-		noteService: h.NoteService,
-		authService: h.AuthService,
-		logger:      h.Logger,
-		translator:  h.Translator,
+		cfg:          h.Cfg,
+		userService:  h.UserService,
+		noteService:  h.NoteService,
+		authService:  h.AuthService,
+		imageService: h.ImageService,
+		logger:       h.Logger,
+		translator:   h.Translator,
 	}
 }

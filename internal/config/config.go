@@ -8,6 +8,7 @@ type (
 		Logger     Logger     `yaml:"logger"`
 		User       User       `yaml:"user"`
 		Validation Validation `yaml:"validation"`
+		Path       Path       `yaml:"path"`
 	}
 
 	Auth struct {
@@ -52,5 +53,10 @@ type (
 		UsernameMinLength  int `yaml:"user_name_min_length"`
 		UsernameMaxLength  int `yaml:"username_max_length"`
 		PasswordMinLetters int `yaml:"password_min_letters"`
+	}
+
+	Path struct {
+		ImagePath string `yaml:"image_path"`
+		LinkPath  string `yaml:"link_path"`
 	}
 )
