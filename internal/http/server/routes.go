@@ -29,4 +29,7 @@ func (s *httpServer) setRoutes() {
 		s.note.PATCH("", s.handler.updateNote)
 		s.note.DELETE("/:id", s.handler.deleteNote)
 	}
+
+	//image routes
+	s.image.POST("", s.handler.uploadImage)
 }

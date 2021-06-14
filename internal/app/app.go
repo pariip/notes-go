@@ -39,12 +39,13 @@ func Run(cfg *config.Config) error {
 	noteService := note.New(cfg, mainRepository, logger, translatorServ)
 	imageService := picture.New(cfg.Path, mainRepository, logger, translatorServ)
 	handler := server.NewHttpHandler(&server.HandlerFields{
-		Cfg:         cfg,
-		UserService: userService,
-		NoteService: noteService,
-		AuthService: authService,
-		Logger:      logger,
-		Translator:  translatorServ,
+		Cfg:          cfg,
+		UserService:  userService,
+		NoteService:  noteService,
+		AuthService:  authService,
+		ImageService: imageService,
+		Logger:       logger,
+		Translator:   translatorServ,
 	})
 	httpServer := server.NewHttpServer(handler)
 

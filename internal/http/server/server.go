@@ -17,6 +17,7 @@ type (
 		admin   *echo.Group
 		user    *echo.Group
 		note    *echo.Group
+		image   *echo.Group
 	}
 )
 
@@ -47,6 +48,7 @@ func NewHttpServer(h *handler) contract.HttpServer {
 	admin := e.Group("/admin", middleware.JWTWithConfig(jwtConfig), middlewarePermission(h, types.Admin))
 	user := e.Group("/user", middleware.JWTWithConfig(jwtConfig))
 	note := e.Group("/note", middleware.JWTWithConfig(jwtConfig))
+	image := e.Group("/image", middleware.JWTWithConfig(jwtConfig))
 
 	return &httpServer{
 		handler: h,
@@ -54,6 +56,7 @@ func NewHttpServer(h *handler) contract.HttpServer {
 		admin:   admin,
 		user:    user,
 		note:    note,
+		image:   image,
 	}
 }
 
