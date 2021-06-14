@@ -8,6 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	params "github.com/pariip/notes-go/internal/params"
 )
 
 // MockValidationService is a mock of ValidationService interface.
@@ -31,6 +32,20 @@ func NewMockValidationService(ctrl *gomock.Controller) *MockValidationService {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockValidationService) EXPECT() *MockValidationServiceMockRecorder {
 	return m.recorder
+}
+
+// Note mocks base method.
+func (m *MockValidationService) Note(note *params.CreateNoteRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Note", note)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Note indicates an expected call of Note.
+func (mr *MockValidationServiceMockRecorder) Note(note interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Note", reflect.TypeOf((*MockValidationService)(nil).Note), note)
 }
 
 // Password mocks base method.
@@ -59,4 +74,92 @@ func (m *MockValidationService) Username(username string) error {
 func (mr *MockValidationServiceMockRecorder) Username(username interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Username", reflect.TypeOf((*MockValidationService)(nil).Username), username)
+}
+
+// MockAuthValidation is a mock of AuthValidation interface.
+type MockAuthValidation struct {
+	ctrl     *gomock.Controller
+	recorder *MockAuthValidationMockRecorder
+}
+
+// MockAuthValidationMockRecorder is the mock recorder for MockAuthValidation.
+type MockAuthValidationMockRecorder struct {
+	mock *MockAuthValidation
+}
+
+// NewMockAuthValidation creates a new mock instance.
+func NewMockAuthValidation(ctrl *gomock.Controller) *MockAuthValidation {
+	mock := &MockAuthValidation{ctrl: ctrl}
+	mock.recorder = &MockAuthValidationMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockAuthValidation) EXPECT() *MockAuthValidationMockRecorder {
+	return m.recorder
+}
+
+// Password mocks base method.
+func (m *MockAuthValidation) Password(password string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Password", password)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Password indicates an expected call of Password.
+func (mr *MockAuthValidationMockRecorder) Password(password interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Password", reflect.TypeOf((*MockAuthValidation)(nil).Password), password)
+}
+
+// Username mocks base method.
+func (m *MockAuthValidation) Username(username string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Username", username)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Username indicates an expected call of Username.
+func (mr *MockAuthValidationMockRecorder) Username(username interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Username", reflect.TypeOf((*MockAuthValidation)(nil).Username), username)
+}
+
+// MockNoteValidation is a mock of NoteValidation interface.
+type MockNoteValidation struct {
+	ctrl     *gomock.Controller
+	recorder *MockNoteValidationMockRecorder
+}
+
+// MockNoteValidationMockRecorder is the mock recorder for MockNoteValidation.
+type MockNoteValidationMockRecorder struct {
+	mock *MockNoteValidation
+}
+
+// NewMockNoteValidation creates a new mock instance.
+func NewMockNoteValidation(ctrl *gomock.Controller) *MockNoteValidation {
+	mock := &MockNoteValidation{ctrl: ctrl}
+	mock.recorder = &MockNoteValidationMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockNoteValidation) EXPECT() *MockNoteValidationMockRecorder {
+	return m.recorder
+}
+
+// Note mocks base method.
+func (m *MockNoteValidation) Note(note *params.CreateNoteRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Note", note)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Note indicates an expected call of Note.
+func (mr *MockNoteValidationMockRecorder) Note(note interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Note", reflect.TypeOf((*MockNoteValidation)(nil).Note), note)
 }
