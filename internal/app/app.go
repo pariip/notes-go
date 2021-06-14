@@ -6,6 +6,7 @@ import (
 	"github.com/pariip/notes-go/internal/http/server"
 	"github.com/pariip/notes-go/internal/service/auth"
 	"github.com/pariip/notes-go/internal/service/note"
+	"github.com/pariip/notes-go/internal/service/picture"
 	"github.com/pariip/notes-go/internal/service/user"
 	"github.com/pariip/notes-go/internal/service/validation"
 	"github.com/pariip/notes-go/pkg/log/logrus"
@@ -36,7 +37,7 @@ func Run(cfg *config.Config) error {
 	authService := auth.New(cfg.Auth, mainRepository, validationService, logger, translatorServ)
 	userService := user.New(cfg.User, mainRepository, validationService, logger, translatorServ)
 	noteService := note.New(cfg, mainRepository, logger, translatorServ)
-
+	imageService := picture.New(cfg.Path, mainRepository, logger, translatorServ)
 	handler := server.NewHttpHandler(&server.HandlerFields{
 		Cfg:         cfg,
 		UserService: userService,
