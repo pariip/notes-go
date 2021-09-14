@@ -1,0 +1,9 @@
+database:
+  username: "postgres"
+  password: "123456"
+  db_name: "go_notes"
+  host: "127.0.0.1"
+  port: "5432"
+  ssl_mode: "disable"
+  time_zone: "Asia/Tehran"
+  charset: "utf8mb4"

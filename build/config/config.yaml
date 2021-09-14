@@ -1,0 +1,39 @@
+auth:
+  access_expiration_in_minute: 15
+  refresh_expiration_in_minute: 525600
+  jwt_secret: "P43m62MH23"
+
+
+database:
+  postgres:
+    username: "postgres"
+    password: "123456"
+    db_name: "go_notes"
+    host: "127.0.0.1"
+    port: "5432"
+    ssl_mode: "disable"
+    time_zone: "Asia/Tehran"
+    charset: "utf8mb4"
+    migration: true
+
+i18n:
+  bundle_path: "./build/i18n/"
+
+logger:
+  max_age: 720h
+  max_size: 20MB
+  filename_pattern: "%Y-%m-%dT%H%m"
+  rotation_time: "24h"
+  internal_path: "./logs/internal/log"
+  request_path: "./logs/request/log"
+
+user:
+
+validation:
+  username_min_length: 3
+  username_max_length: 50
+  password_min_letters: 8
+
+path:
+  image_path: "internal/image/note_image/"
+  link_path: "http://127.0.0.1/"

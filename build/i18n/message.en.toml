@@ -1,0 +1,28 @@
+# invalid
+InvalidWalletStatus = "invalid wallet status"
+InvalidUserStatus = "invalid user status"
+InvalidBookStatus = "invalid book status"
+InvalidGender = "invalid gender"
+InvalidRole = "invalid role"
+InvalidUsernameLength = "invalid username length"
+InvalidPassword = "invalid password"
+InvalidToken = "invalid token"
+InvalidEmptyTitle = "invalid empty title"
+InvalidEmptyDescription = "invalid empty description"
+
+# general
+DBError = "error is exist"
+GeneralError = "error is exist"
+ParseQueryError = "parse query error"
+NotPermission = "not have permission to access"
+
+# user
+UserNotFound = "user not found"
+UsernameIsDuplicate = "username is duplicate"
+UsernameOrPasswordIsIncorrect = "username or password is incorrect"
+
+# note
+NoteNotFound = "note not found"
+
+#picture
+PictureDuplicate = " image is duplicate"
