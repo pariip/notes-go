@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  notes-go-db:
+    image: postgres:12
+    container_name: notes-go
+    volumes:
+      - dbdata1:/var/lib/postgressql/data
+    restart: always
+    ports:
+      - 7558:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: go_notes
+
+  notes-go-test-db:
+    image: postgres:12
+    container_name: notes-go-test
+    volumes:
+      - dbdata2:/var/lib/postgressql/data
+    restart: always
+    ports:
+      - 7559:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: go_notes_test
+
+volumes:
+  dbdata1:
+  dbdata2:
